@@ -1,0 +1,24 @@
+configure:
+    #!/bin/sh
+    if [ ! -e build ]; then
+        cmake -B build\
+            -G 'Ninja Multi-Config' \
+            -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
+            -DCMAKE_CXX_FLAGS="-fdiagnostics-color=always -Wall -Werror" \
+            -DCMAKE_CXX_FLAGS_DEBUG="-fsanitize=address -fsanitize=undefined -g -rdynamic" \
+            -DCMAKE_CXX_FLAGS_RELEASE="-g0 -O3 -DNDEBUG"
+    fi
+
+reconfigure:
+    -rm -rf build
+    just configure
+
+build config: configure
+    cmake --build build --config {{config}}
+
+run *args: (build "Debug")
+    ./build/Debug/%target_name% {{args}}
+
+run-rel *args: (build "Release")
+    ./build/Release/%target_name% {{args}}
+

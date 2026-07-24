@@ -5,7 +5,7 @@ configure:
             -G 'Ninja Multi-Config' \
             -DCMAKE_EXPORT_COMPILE_COMMANDS=ON \
             -DCMAKE_CXX_FLAGS="-fdiagnostics-color=always -Wall -Werror" \
-            -DCMAKE_CXX_FLAGS_DEBUG="-fsanitize=address -fsanitize=undefined -g -rdynamic" \
+            -DCMAKE_CXX_FLAGS_DEBUG="-fsanitize=address -fsanitize=undefined -g" \
             -DCMAKE_CXX_FLAGS_RELEASE="-g0 -O3 -DNDEBUG"
     fi
 
